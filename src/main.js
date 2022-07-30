@@ -43,7 +43,7 @@ app.get('/help/*' , (req, res)=>{
 })
 
 app.get('/weather', (req, res) => {
-    // console.log(req.query.address);
+    console.log(req.query.address);
     if (!req.query.address) {
         return res.send({
             error:'add address property '

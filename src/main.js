@@ -1,9 +1,8 @@
 const hbs = require('hbs')
 const path = require('path')
 const express = require('express')
-// const info = require('../public/js/app')
 
-
+const port = process.env.PORT || 5000
 const app = express()
 const viewsPath = path.join(__dirname, '../template/views')
 const publicDirectoryPath = path.join(__dirname, '../public')
@@ -44,6 +43,7 @@ app.get('/help/*' , (req, res)=>{
 })
 
 app.get('/weather', (req, res) => {
+    // console.log(req.query.address);
     if (!req.query.address) {
         return res.send({
             error:'add address property '
@@ -62,6 +62,6 @@ app.get('*' , (req, res)=>{
     })
 })
 
-app.listen(5000, () => {
-    console.log('Server is up on port 3000.')
+app.listen(port, () => {
+    console.log('Server is up on port '+port)
 })

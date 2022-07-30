@@ -16,6 +16,7 @@ btn.addEventListener('click' , (e)=>{
     e.preventDefault()
     const location  = input.value
     fetch(`http://api.weatherstack.com/current?access_key=aadf8720486177be844f8edb498e285d&query=${location}`)
+    // fetch(`http://localhost:5000/weather?address=${location}`)
     .then(i=>i.json())
     .then(i=>{
         if (i.error) {

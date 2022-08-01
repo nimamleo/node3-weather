@@ -1,6 +1,8 @@
 const hbs = require('hbs')
 const path = require('path')
 const express = require('express')
+const geocode = require('./utils/geocode')
+const forecast = require('./utils/forecast')
 
 const port = process.env.PORT || 5000
 const app = express()
@@ -38,22 +40,34 @@ app.get('/help' , (req, res)=>{
 })
 app.get('/help/*' , (req, res)=>{
     res.render('404' , {
-        error:'help ariticle not found' 
+        error:'help ariticle not found'  
     })
 })
 
 app.get('/weather', (req, res) => {
-    console.log(req.query.address);
     if (!req.query.address) {
         return res.send({
             error:'add address property '
         })
     }
-    res.send({
-        location:req.query.address,
-        info:info
-
+    geocode(req.query.address , (error , {latitude , longitude , location} = {})=>{
+        if (error) {
+            return res.send({error})
+        }
+    
+    
+        forecast(latitude , longitude , (error , forecastData)=>{
+            if (error) {
+                return res.send({error})
+            }
+            res.send({
+                forecast: forecastData ,
+                location , 
+                address:req.query.address
+            })
+        })  
     })
+    
 })
 
 app.get('*' , (req, res)=>{

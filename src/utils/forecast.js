@@ -10,7 +10,7 @@ function forecast(latitude , longitude , callback){
         }else if (body.error){
             callback('unable to find location ' , undefined);
         }else{
-            callback(undefined , 'temperature is :  '+body.current.temperature+' C')
+            callback(undefined , 'temperature is : '+body.current.temperature+' C' + '\nwind speed: '+body.current.wind_speed +'\nhumidity: '+body.current.humidity)
         }
     })
 
